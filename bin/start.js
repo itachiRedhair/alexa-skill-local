@@ -26,7 +26,7 @@ const args = argParser.parseArgs();
 
 const filePath = path.resolve(args.file ? args.file : './index.js');
 
-const port = args.port ? args.port : 3000;
+const port = args.port ? args.port : "3000";
 
 console.log('in start.js file', 'filePath', filePath, 'port', port);
 
@@ -36,7 +36,7 @@ const watchList = [
     filePath + '/'
 ];
 
-serverArgs = [filePath, port];
+const serverArgs = [filePath, port];
 
 try {
     handler = require(filePath).handler;
