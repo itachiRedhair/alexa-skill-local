@@ -1,4 +1,4 @@
-{
+  {
   "name": "alexa-skill-local",
   "version": "1.1.0",
   "description": "Develop Alexa skills locally",
@@ -9,7 +9,7 @@
     "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
   },
   "bin": {
-    "alexa-skill-local": "./bin/start.js"
+    "alexa-skill-local": "bin/start.js"
   },
   "engines": {
     "node": ">=6.0.0"
