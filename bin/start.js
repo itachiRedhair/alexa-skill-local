@@ -1,4 +1,4 @@
-#!/usr/bin / env node
+#!/usr/bin/env node
 
 const ArgumentParser = require('argparse').ArgumentParser;
 const argParser = new ArgumentParser();
