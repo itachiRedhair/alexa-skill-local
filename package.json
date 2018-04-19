@@ -4,12 +4,10 @@
   "description": "Develop Alexa skills locally",
   "main": "index.js",
   "scripts": {
+    "postinstall": "node ./bin/start.js",
     "start": "nodemon ./bin/start.js",
     "test": "node_modules/.bin/mocha --reporter spec",
     "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
-  },
-  "bin": {
-    "alexa-skill-local": "bin/start.js"
   },
   "engines": {
     "node": ">=6.0.0"
