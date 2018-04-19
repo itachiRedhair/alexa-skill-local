@@ -24,7 +24,11 @@ argParser.addArgument(
 
 const args = argParser.parseArgs();
 
-const filePath = path.resolve(args.file ? args.file : './index.js');
+let filePath = path.resolve(args.file ? args.file : './');
+
+if (path.extname(filePath) === '.js') {
+    filePath = path.dirname(filePath);
+}
 
 const port = args.port ? args.port : "3000";
 
