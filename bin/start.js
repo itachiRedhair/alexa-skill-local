@@ -39,6 +39,7 @@ if (path.extname(filePath) === '.js') {
 
         if (packageJson.main) {
             fileName = packageJson.main;
+            console.log(colors.yellow('Taking ' + fileName + ' as an entry point from main field in package.json'));
         } else {
             fileName = 'index.js';
             console.log(console.yellow('Main is not defined in package.json. Taking index.js as an entry point'));
@@ -79,6 +80,6 @@ try {
         });
 
 } catch (err) {
-    console.error(colors.red('lambda entry file not found'));
+    console.error(colors.red('Error finding handler function in entry file.'));
     console.log(err);
 }
