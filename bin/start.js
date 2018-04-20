@@ -1,4 +1,4 @@
-#!/usr/bin / env node
+#!/usr/bin/env node
 
 const ArgumentParser = require('argparse').ArgumentParser;
 const argParser = new ArgumentParser();
@@ -24,19 +24,26 @@ argParser.addArgument(
 
 const args = argParser.parseArgs();
 
-const filePath = path.resolve(args.file ? args.file : './index.js');
+let filePath = path.resolve(args.file ? args.file : './');
+
+const watchList = [
+    filePath
+];
+
+if (path.extname(filePath) === '.js') {
+    let fileDirectory = path.dirname(filePath);
+    watchList.push(fileDirectory);
+}
 
 const port = args.port ? args.port : "3000";
 
-console.log('in start.js file', 'filePath', filePath, 'port', port);
-
 let handler;
 
-const watchList = [
-    filePath + '/'
-];
+
 
 const serverArgs = [filePath, port];
+
+console.log(colors.magenta('alexa-skill-local is starting...'));
 
 try {
     handler = require(filePath).handler;
@@ -44,14 +51,18 @@ try {
     ngrokInit(port);
 
     nodemon({
-        // nodeArgs: (process.env.REMOTE_DEBUG) ? ['--debug'] : [],
         script: __dirname + '/../server.js',
         args: serverArgs,
-        watch: watchList,
-        // env: {
-        //     'DEBUG': (process.env.DEBUG) ? process.env.DEBUG : 'skill'
-        // }
+        watch: watchList
     });
+
+    nodemon
+        .on('quit', function () {
+            console.log(colors.red('alexa-skill-local has stopped working.'));
+            process.exit();
+        }).on('restart', function (files) {
+            console.log(colors.green('Restarting due to changes in files:'), files);
+        });
 
 } catch (err) {
     console.error(colors.red('lambda entry file not found'));

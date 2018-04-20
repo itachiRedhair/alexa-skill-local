@@ -27,6 +27,5 @@ server.post('/', (req, res) => {
 });
 
 server.listen(port , function () {
-    console.log('Alexa Local is running');
-    console.log(colors.green('Express is running on port ' + port))
+    console.log(colors.green('Service is running on port ' + port))
 });
