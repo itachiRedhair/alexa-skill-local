@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-
+const colors = require('colors');
+console.log(colors.magenta('alexa-skill-local is starting...'));
 const ArgumentParser = require('argparse').ArgumentParser;
 const argParser = new ArgumentParser();
 const path = require('path');
-const colors = require('colors');
 const nodemon = require('nodemon');
 
 const ngrokInit = require('./../ngrokController');
@@ -33,6 +33,22 @@ const watchList = [
 if (path.extname(filePath) === '.js') {
     let fileDirectory = path.dirname(filePath);
     watchList.push(fileDirectory);
+} else {
+    try {
+        let packageJson = require(filePath + '/package.json');
+
+        if (packageJson.main) {
+            fileName = packageJson.main;
+        } else {
+            fileName = 'index.js';
+            console.log(console.yellow('Main is not defined in package.json. Taking index.js as an entry point'));
+        }
+
+        filePath += '/' + fileName;
+    } catch (err) {
+        console.log(colors.yellow('package.json not found. Taking index.js as an entry point'));
+        filePath += '/' + 'index.js';
+    }
 }
 
 const port = args.port ? args.port : "3000";
@@ -42,8 +58,6 @@ let handler;
 
 
 const serverArgs = [filePath, port];
-
-console.log(colors.magenta('alexa-skill-local is starting...'));
 
 try {
     handler = require(filePath).handler;
