@@ -7,18 +7,18 @@ const nodemon = require('nodemon');
 let accessToken = null;
 
 app.use(bodyParser.json());
-app.use(express.static(__dirname + '/loginPage'));
+app.use(express.static(__dirname + '/html'));
 
-app.get('/oauth2/callback', function (req, res) {
+app.get('/oauth2/callback', (req, res) => {
     accessToken = req.query.access_token;
-    res.sendFile(__dirname + '/loginPage/close.html');
+    res.sendFile(__dirname + '/html/close.html');
     httpServer.close();
     httpServer.emit('access-token', accessToken);
 });
 
 const httpServer = http.createServer(app);
 
-module.exports = function initLoginServer() {
+module.exports = function intiAuthServer() {
     httpServer.listen(3001, () => {
         console.log('Open in your browser and login with Amazon ==> http://localhost:3001')
     });

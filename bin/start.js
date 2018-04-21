@@ -6,9 +6,9 @@ const argParser = new ArgumentParser();
 const path = require('path');
 const nodemon = require('nodemon');
 
-const updateAlexaEndpoint = require('./../ngrokController');
-const initLoginServer = require('./../loginServer');
-const httpServer = initLoginServer();
+const updateAlexaEndpoint = require('./../endpointController').updateAlexaEndpoint;
+const ngrokInit = require('./../endpointController').ngrokInit;
+const intiAuthServer = require('./../authServer');
 
 argParser.addArgument(
     ['-f', '--file'],
@@ -33,6 +33,17 @@ argParser.addArgument(
         constant: 9229
     }
 )
+
+argParser.addArgument(
+    ['-c', '--config'],
+    {
+        help: 'Required. Load you config file with skillId and stage.',
+        defaultValue: 'asl-config.json'
+        // required: true
+    }
+)
+
+const httpsServer = intiAuthServer();
 
 const args = argParser.parseArgs();
 
@@ -72,22 +83,40 @@ if (args.inspect_brk) {
     nodemonArgs.push(`--inspect-brk=${args.inspect_brk}`)
 }
 
-let handler;
-
 const serverArgs = [filePath, port];
 
-httpServer.on('access-token', async (accessToken) => {
-    await updateAlexaEndpoint(port, accessToken);
-    initAlexaServiceServer();
+httpsServer.on('access-token', async (accessToken) => {
+    try {
+        const config = require(path.resolve(args.config));
+
+        try {
+            await updateAlexaEndpoint(port, accessToken, config);
+            initMockLambdaServer();
+        } catch (err) {
+            console.log(colors.red(err));
+            console.log(colors.green('Only Mock Lambda Server will run in case you can deal with it somehow.'));
+            initMockLambdaServer();
+        }
+
+    } catch (err) {
+        console.log(colors.red('Error finding config file. Add asl-config.json file in root directory or specify JSON file path with --config argument .'));
+        console.log(colors.yellow('Error updating Alexa Skill Endpoint. You have to do it manually.\n'))
+        const url = await ngrokInit(port);
+        console.log(colors.yellow('-----------------------------------------------------------------------------------------'));
+        console.log(colors.yellow('| Enter this url as HTTPS endpoint in your Alexa console -->'), colors.cyan(url), colors.yellow(' |'));
+        console.log(colors.yellow('-----------------------------------------------------------------------------------------\n'));
+        initMockLambdaServer();
+    }
+
 });
 
-function initAlexaServiceServer() {
+function initMockLambdaServer() {
     try {
-        handler = require(filePath).handler;
+        const handler = require(filePath).handler;
 
         nodemon({
             nodeArgs: nodemonArgs,
-            script: __dirname + '/../alexaServiceServer.js',
+            script: __dirname + '/../mockLambdaServer.js',
             args: serverArgs,
             watch: watchList
         });

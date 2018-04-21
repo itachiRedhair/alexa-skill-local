@@ -27,5 +27,5 @@ server.post('/', (req, res) => {
 });
 
 server.listen(port , function () {
-    console.log(colors.green('Service is running on port ' + port))
+    console.log(colors.green('Mock Lambda Service is running on port ' + port))
 });
