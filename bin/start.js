@@ -1,9 +1,9 @@
 #!/usr/bin/env node
-
+const colors = require('colors');
+console.log(colors.magenta('alexa-skill-local is starting...'));
 const ArgumentParser = require('argparse').ArgumentParser;
 const argParser = new ArgumentParser();
 const path = require('path');
-const colors = require('colors');
 const nodemon = require('nodemon');
 
 const ngrokInit = require('./../ngrokController');
@@ -26,19 +26,37 @@ const args = argParser.parseArgs();
 
 let filePath = path.resolve(args.file ? args.file : './');
 
+const watchList = [
+    filePath
+];
+
 if (path.extname(filePath) === '.js') {
-    filePath = path.dirname(filePath);
+    let fileDirectory = path.dirname(filePath);
+    watchList.push(fileDirectory);
+} else {
+    try {
+        let packageJson = require(filePath + '/package.json');
+
+        if (packageJson.main) {
+            fileName = packageJson.main;
+            console.log(colors.yellow('Taking ' + fileName + ' as an entry point from main field in package.json'));
+        } else {
+            fileName = 'index.js';
+            console.log(console.yellow('Main is not defined in package.json. Taking index.js as an entry point'));
+        }
+
+        filePath += '/' + fileName;
+    } catch (err) {
+        console.log(colors.yellow('package.json not found. Taking index.js as an entry point'));
+        filePath += '/' + 'index.js';
+    }
 }
 
 const port = args.port ? args.port : "3000";
 
-console.log('in start.js file', 'filePath', filePath, 'port', port);
-
 let handler;
 
-const watchList = [
-    filePath + '/'
-];
+
 
 const serverArgs = [filePath, port];
 
@@ -48,16 +66,20 @@ try {
     ngrokInit(port);
 
     nodemon({
-        // nodeArgs: (process.env.REMOTE_DEBUG) ? ['--debug'] : [],
         script: __dirname + '/../server.js',
         args: serverArgs,
-        watch: watchList,
-        // env: {
-        //     'DEBUG': (process.env.DEBUG) ? process.env.DEBUG : 'skill'
-        // }
+        watch: watchList
     });
 
+    nodemon
+        .on('quit', function () {
+            console.log(colors.red('alexa-skill-local has stopped working.'));
+            process.exit();
+        }).on('restart', function (files) {
+            console.log(colors.green('Restarting due to changes in files:'), files);
+        });
+
 } catch (err) {
-    console.error(colors.red('lambda entry file not found'));
+    console.error(colors.red('Error finding handler function in entry file.'));
     console.log(err);
 }
