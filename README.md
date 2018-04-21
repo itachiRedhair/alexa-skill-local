@@ -60,3 +60,7 @@ Links
 ----
 npm : https://www.npmjs.com/package/alexa-skill-local
 Privacy Policy : https://sites.google.com/view/alexa-skill-local
+
+Keywords
+----
+`alexa`, `nodemon`, `lambda`, `ngrok`, `alexa skill`, `alexa skill local`
