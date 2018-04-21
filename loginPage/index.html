@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>alexa-skill-local</title>
+</head>
+
+<body>
+    <h1>Welcome to alexa-skill-local</h1>
+    <h2>To continue Login With amazon</h2>
+    <a href id="LoginWithAmazon">
+        <img border="0" alt="Login with Amazon" src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"
+            width="156" height="32" />
+    </a>
+    <script type="text/javascript">
+        document.getElementById('LoginWithAmazon').onclick = function () {
+            options = { scope: 'alexa::ask:skills:readwrite' };
+            amazon.Login.authorize(options,
+                'http://localhost:3001/oauth2/callback');
+            return false;
+        };
+    </script>
+
+    <div id="amazon-root"></div>
+
+    <script type="text/javascript">
+
+        window.onAmazonLoginReady = function () {
+            amazon.Login.setClientId('amzn1.application-oa2-client.810baf051e75411ea1a7c9c0153ac902');
+        };
+        (function (d) {
+            var a = d.createElement('script'); a.type = 'text/javascript';
+            a.async = true; a.id = 'amazon-login-sdk';
+            a.src = 'https://api-cdn.amazon.com/sdk/login1.js';
+            d.getElementById('amazon-root').appendChild(a);
+        })(document);
+
+    </script>
+
+</body>
+
+</html>

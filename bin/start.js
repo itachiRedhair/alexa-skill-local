@@ -6,7 +6,9 @@ const argParser = new ArgumentParser();
 const path = require('path');
 const nodemon = require('nodemon');
 
-const ngrokInit = require('./../ngrokController');
+const updateAlexaEndpoint = require('./../ngrokController');
+const initLoginServer = require('./../loginServer');
+const httpServer = initLoginServer();
 
 argParser.addArgument(
     ['-f', '--file'],
@@ -74,27 +76,32 @@ let handler;
 
 const serverArgs = [filePath, port];
 
-try {
-    handler = require(filePath).handler;
+httpServer.on('access-token', async (accessToken) => {
+    await updateAlexaEndpoint(port, accessToken);
+    initAlexaServiceServer();
+});
 
-    ngrokInit(port);
+function initAlexaServiceServer() {
+    try {
+        handler = require(filePath).handler;
 
-    nodemon({
-        nodeArgs: nodemonArgs,
-        script: __dirname + '/../server.js',
-        args: serverArgs,
-        watch: watchList
-    });
-
-    nodemon
-        .on('quit', function () {
-            console.log(colors.red('alexa-skill-local has stopped working.'));
-            process.exit();
-        }).on('restart', function (files) {
-            console.log(colors.green('Restarting due to changes in files:'), files);
+        nodemon({
+            nodeArgs: nodemonArgs,
+            script: __dirname + '/../alexaServiceServer.js',
+            args: serverArgs,
+            watch: watchList
         });
 
-} catch (err) {
-    console.error(colors.red('Error finding handler function in entry file.'));
-    console.log(err);
+        nodemon
+            .on('quit', function () {
+                console.log(colors.red('alexa-skill-local has stopped working.'));
+                process.exit();
+            }).on('restart', function (files) {
+                console.log(colors.green('Restarting due to changes in files:'), files);
+            });
+
+    } catch (err) {
+        console.error(colors.red('Error finding handler function in entry file.'));
+        console.log(err);
+    }
 }
