@@ -1,78 +1,66 @@
-Privacy Policy
-Effective date: April 21, 2018
+# alexa-skill-local
+`alexa-skill-local` provides you local development environment for your Alexa Skill. It starts ngrok and mock lambda server on the same port. All the traffic on this port is tunneled through ngrok. You have to login with Amazon to update your skill endpoint with the ngrok url. Mock lambda server calls your lambda function the each time it gets request from Alexa.
 
-alexa-skill-local ("us", "we", or "our") operates the https://itachiredhair.github.io/alexa-skill-local/ website (the "Service").
+### Requirements
+ - Node and npm
+ - Alexa Skill (Lambda Code) written in Node.js
 
-alexa-skill-local is a node module which provides you to develop your skills locally. To have smooth experience we need your authentication to use APIs provided by Alexa Skill Management API (SMAPI).
+### Installation
 
-This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data. This Privacy Policy for alexa-skill-local is powered by TermsFeed.
+Use [Node.js](https://nodejs.org/) v8.x.x to run.
 
-We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, accessible from https://itachiredhair.github.io/alexa-skill-local/
+You can install alexa-skill-local globally (recommended) or in your project directory (in this case you many want to run it from npm scripts in package.json).
 
-Information Collection And Use
-We collect several different types of information for various purposes to provide and improve our Service to you.
+```sh
+$ npm install -g alexa-skill-local
+```
 
-Types of Data Collected
-Personal Data
-While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you ("Personal Data").
+### Usage
 
-Tracking Data
-We use access token provided by your login with Amazon and use it to authenticate APIs provided by Alexa SMAPI.
+Run following command. When prompted open `http://localhost:3001` in your browser. Login with Amazon to grant `alexa-skill-local` an access to update your skill's endpoint.
 
-Use of Data
-alexa-skill-local uses the collected data for various purposes:
+```sh
+$ alexa-skill-local [-f|--file <lambda_function_entry_file>] [-p|--port <server_and_ngrok_port>] [-c|--config <json_config_file>] [--inspect-brk <port>]
+```
+`--file` : Optional. When run without --file argument alexa-skill-local searches for main entry in `package.json`. If not found, it searches for `index.js` in the root directory.
+`--port`: Optional. Specify port value for mock lambda server and ngrok. Default value is 3000.
+`--config`: Optional. If not specified, it searches for `asl-config.json` in the root directory. You need to have config file, otherwise skill endpoint update won't work. Config file has to be of following format (If you are not sure of the "stage", in most cases it is "development"):
+```sh
+{
+    "skillId" : "your_skill_id_here",
+    "stage" : "stage_of_the_skill"
+}
+```
+`--inspect-brk`: Optional. Specify this flag if you want to attach debugger to mock lambda server process. If port is not specified debugger will listen to is 9229.
 
-To provide and maintain the Service
-To notify you about changes to our Service
-To allow you to participate in interactive features of our Service when you choose to do so
-To provide customer care and support
-To provide analysis or valuable information so that we can improve the Service
-To monitor the usage of the Service
-To detect, prevent and address technical issues
-Transfer Of Data
-Your information, including Personal Data, may be transferred to — and maintained on — computers located outside of your state, province, country or other governmental jurisdiction where the data protection laws may differ than those from your jurisdiction.
+Then you can use your favorite editor to attach debugger to this process.
+For example in VSCode you will need following configuration in your launch.json file:
+```sh
+{
+    "type": "node",
+    "request": "attach",
+    "name": "Node: Nodemon",
+    "processId": "${command:PickProcess}",
+    "restart": true,
+    "protocol": "inspector",
+    "port": 9229
+}
+```
 
-If you are located outside India and choose to provide information to us, please note that we transfer the data, including Personal Data, to India and process it there.
+License
+----
 
-Your consent to this Privacy Policy followed by your submission of such information represents your agreement to that transfer.
+MIT
 
-alexa-skill-local will take all steps reasonably necessary to ensure that your data is treated securely and in accordance with this Privacy Policy and no transfer of your Personal Data will take place to an organization or a country unless there are adequate controls in place including the security of your data and other personal information.
+Contact
+----
+email : akshay.milmile@gmail.com
 
-Disclosure Of Data
-Legal Requirements
-alexa-skill-local may disclose your Personal Data in the good faith belief that such action is necessary to:
+Links
+----
+npm : https://www.npmjs.com/package/alexa-skill-local
+Privacy Policy : https://sites.google.com/view/alexa-skill-local
 
-To comply with a legal obligation
-To protect and defend the rights or property of alexa-skill-local
-To prevent or investigate possible wrongdoing in connection with the Service
-To protect the personal safety of users of the Service or the public
-To protect against legal liability
-Security Of Data
-The security of your data is important to us, but remember that no method of transmission over the Internet, or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security.
-
-Service Providers
-We may employ third party companies and individuals to facilitate our Service ("Service Providers"), to provide the Service on our behalf, to perform Service-related services or to assist us in analyzing how our Service is used.
-
-These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.
-
-Links To Other Sites
-Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit.
-
-We have no control over and assume no responsibility for the content, privacy policies or practices of any third party sites or services.
-
-Children's Privacy
-Our Service does not address anyone under the age of 13 ("Children").
-
-We do not knowingly collect personally identifiable information from anyone under the age of 13. If you are a parent or guardian and you are aware that your Children has provided us with Personal Data, please contact us. If we become aware that we have collected Personal Data from children without verification of parental consent, we take steps to remove that information from our servers.
-
-Changes To This Privacy Policy
-We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
-
-We will let you know via email and/or a prominent notice on our Service, prior to the change becoming effective and update the "effective date" at the top of this Privacy Policy.
-
-You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.
-
-Contact Us
-If you have any questions about this Privacy Policy, please contact us:
-
-By email: akshay.milmile@gmail.com
+Keywords
+----
+`alexa`, `nodemon`, `lambda`, `ngrok`, `alexa skill`, `alexa skill local`
