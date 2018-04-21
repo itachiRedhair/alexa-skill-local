@@ -11,14 +11,24 @@ const ngrokInit = require('./../ngrokController');
 argParser.addArgument(
     ['-f', '--file'],
     {
-        help: 'Specify lambda entry file. By default it will search for index.js file in the current directory'
+        help: 'Specify lambda entry file. By default it will search for index.js file in the current directory.'
     }
 )
 
 argParser.addArgument(
     ['-p', '--port'],
     {
-        help: 'Specify port for express and ngrok setup. Default: 3000'
+        help: 'Specify port for express and ngrok setup. Default: 3000.'
+    }
+)
+
+argParser.addArgument(
+    '--inspect-brk',
+    {
+        help: 'Specify if you want to attach debugger.',
+        action: 'store',
+        nargs: '?',
+        constant: 9229
     }
 )
 
@@ -54,9 +64,13 @@ if (path.extname(filePath) === '.js') {
 
 const port = args.port ? args.port : "3000";
 
+const nodemonArgs = []
+
+if (args.inspect_brk) {
+    nodemonArgs.push(`--inspect-brk=${args.inspect_brk}`)
+}
+
 let handler;
-
-
 
 const serverArgs = [filePath, port];
 
@@ -66,6 +80,7 @@ try {
     ngrokInit(port);
 
     nodemon({
+        nodeArgs: nodemonArgs,
         script: __dirname + '/../server.js',
         args: serverArgs,
         watch: watchList
