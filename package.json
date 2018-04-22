@@ -1,6 +1,6 @@
 {
   "name": "alexa-skill-local",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Develop Alexa skills locally",
   "scripts": {
     "start": "nodemon ./bin/start.js",
