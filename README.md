@@ -22,19 +22,19 @@ Run following command. When prompted open `http://localhost:3001` in your browse
 ```sh
 $ alexa-skill-local [-f|--file <lambda_function_entry_file>] [-p|--port <server_and_ngrok_port>] [-c|--config <json_config_file>] [--inspect-brk <port>]
 ```
-`--file` : Optional. When run without --file argument alexa-skill-local searches for main entry in `package.json`. If not found, it searches for `index.js` in the root directory.
-`--port`: Optional. Specify port value for mock lambda server and ngrok. Default value is 3000.
-`--config`: Optional. If not specified, it searches for `asl-config.json` in the root directory. You need to have config file, otherwise skill endpoint update won't work. Config file has to be of following format (If you are not sure of the "stage", in most cases it is "development"):
+`--file` : Optional. When run without `--file` argument alexa-skill-local searches for main entry in `package.json`. If not found, it searches for `index.js` in the root directory.  
+`--port`: Optional. Specify port value for mock lambda server and ngrok. Default value is 3000.  
+`--config`: Optional. If not specified, it searches for `asl-config.json` in the root directory. You need to have config file, otherwise skill endpoint update won't work. Config file has to be of following format (If you are not sure of the "stage", in most cases it is "development"):  
 ```sh
 {
     "skillId" : "your_skill_id_here",
     "stage" : "stage_of_the_skill"
 }
-```
-`--inspect-brk`: Optional. Specify this flag if you want to attach debugger to mock lambda server process. If port is not specified debugger will listen to is 9229.
+```  
+`--inspect-brk`: Optional. Specify this flag if you want to attach debugger to mock lambda server process. If port is not specified debugger will listen to is 9229.  
 
-Then you can use your favorite editor to attach debugger to this process.
-For example in VSCode you will need following configuration in your launch.json file:
+Then you can use your favorite editor to attach debugger to this process.  
+For example in VSCode you will need following configuration in your launch.json file:  
 ```sh
 {
     "type": "node",
@@ -45,7 +45,7 @@ For example in VSCode you will need following configuration in your launch.json 
     "protocol": "inspector",
     "port": 9229
 }
-```
+```  
 
 License
 ----
@@ -58,7 +58,7 @@ email : akshay.milmile@gmail.com
 
 Links
 ----
-npm : https://www.npmjs.com/package/alexa-skill-local
+npm : https://www.npmjs.com/package/alexa-skill-local  
 Privacy Policy : https://sites.google.com/view/alexa-skill-local
 
 Keywords
