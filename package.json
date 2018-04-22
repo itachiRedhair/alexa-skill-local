@@ -13,8 +13,12 @@
   "engines": {
     "node": ">=6.0.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itachiRedhair/alexa-skill-local"
+  },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "argparse": "^1.0.10",
     "body-parser": "^1.18.2",
