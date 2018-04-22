@@ -20,7 +20,7 @@
             "program": "${workspaceFolder}\\bin\\start.js",
             "args": [
                 "--file",
-                "F:\\Workspace\\alexa\\Pack_Buddy\\lambda\\src"
+                "F:\\Workspace\\alexa\\FlashCards\\lambda\\custom\\"
             ]
         }
     ]

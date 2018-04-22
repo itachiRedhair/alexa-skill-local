@@ -65,7 +65,7 @@ if (path.extname(filePath) === '.js') {
             console.log(colors.yellow('Taking ' + fileName + ' as an entry point from main field in package.json'));
         } else {
             fileName = 'index.js';
-            console.log(console.yellow('Main is not defined in package.json. Taking index.js as an entry point'));
+            console.log(colors.yellow('Main is not defined in package.json. Taking index.js as an entry point'));
         }
 
         filePath += '/' + fileName;
