@@ -19,8 +19,7 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}\\bin\\start.js",
             "args": [
-                "--file",
-                "F:\\Workspace\\alexa\\FlashCards\\lambda\\custom\\"
+
             ]
         }
     ]
