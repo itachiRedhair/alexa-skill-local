@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/itachiRedhair/alexa-skill-local.svg?branch=master)](https://travis-ci.org/itachiRedhair/alexa-skill-local)
+
+[![Coverage Status](https://coveralls.io/repos/github/itachiRedhair/alexa-skill-local/badge.svg?branch=master)](https://coveralls.io/github/itachiRedhair/alexa-skill-local?branch=master)
+
 # alexa-skill-local
 `alexa-skill-local` provides you local development environment for your Alexa Skill. It starts ngrok and mock lambda server on the same port. All the traffic on this port is tunneled through ngrok. You have to login with Amazon to update your skill endpoint with the ngrok url. Mock lambda server calls your lambda function the each time it gets request from Alexa.
 
