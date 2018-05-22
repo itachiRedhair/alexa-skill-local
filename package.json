@@ -4,8 +4,8 @@
   "description": "Develop Alexa skills locally",
   "scripts": {
     "start": "nodemon ./bin/start.js",
-    "test": "node_modules/.bin/mocha --reporter spec",
-    "cover": "node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
+    "test": "NODE_ENV=test node_modules/.bin/mocha --reporter spec",
+    "cover": "NODE_ENV=test node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha -- -R spec test/*"
   },
   "bin": {
     "alexa-skill-local": "./bin/start.js"
@@ -31,6 +31,7 @@
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
     "istanbul": "^0.4.5",
-    "mocha": "^5.1.1"
+    "mocha": "^5.1.1",
+    "request": "^2.85.0"
   }
 }
