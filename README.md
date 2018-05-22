@@ -48,7 +48,7 @@ For example in VSCode you will need following configuration in your launch.json 
 {
     "type": "node",
     "request": "attach",
-    "name": "Node: Nodemon",
+    "name": "alexa-skill-local",
     "processId": "${command:PickProcess}",
     "restart": true,
     "protocol": "inspector",
@@ -70,6 +70,3 @@ Links
 npm : https://www.npmjs.com/package/alexa-skill-local  
 Privacy Policy : https://sites.google.com/view/alexa-skill-local
 
-Keywords
-----
-`alexa`, `nodemon`, `lambda`, `ngrok`, `alexa skill`, `alexa skill local`
