@@ -2,6 +2,9 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/itachiRedhair/alexa-skill-local/badge.svg?branch=master)](https://coveralls.io/github/itachiRedhair/alexa-skill-local?branch=master)
 
+# DEPRECATED
+This library is not maintained anymore. It might not work well for latest ASK SDK. Feel free to reach out if you liked the idea behind this library and are interested in maintaining it.
+
 # Update
 Now working with ASK SDK v2.
 
